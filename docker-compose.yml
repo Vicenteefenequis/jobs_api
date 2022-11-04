@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    command: sh -c "npm run start:dev"
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - api-net
+  db:
+    container_name: db
+    build: .docker/postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=jobs_db
+    networks:
+      - api-net
+networks:
+  api-net:
+    driver: bridge
