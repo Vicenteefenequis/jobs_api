@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UserModel } from './user.entity';
 import { UserMapper } from './user.mapper';
 
-export class FindOneRepository implements Users.FindOneRepository {
+export class FindOneUserRepository implements Users.FindOneUserRepository {
   constructor(
     @InjectRepository(UserModel)
     private readonly repository: Repository<UserModel>,

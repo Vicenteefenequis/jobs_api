@@ -5,15 +5,15 @@ import { RegisterUser } from '../adapter/register-user';
 import { CreateUserRepository } from '../repository/create.repository';
 import { plainToClass } from 'class-transformer';
 import { UserDTO } from '../dto/user-dto';
-import { FindOneRepository } from '../repository/find-one.repository';
+import { FindOneUserRepository } from '../repository/find-one.repository';
 
 @Injectable()
 export class CreateUserService {
   constructor(
     @Inject(CreateUserRepository)
     private readonly createRepository: Users.CreateRepository,
-    @Inject(FindOneRepository)
-    private readonly findOneRepository: Users.FindOneRepository,
+    @Inject(FindOneUserRepository)
+    private readonly FindOneUserRepository: Users.FindOneUserRepository,
   ) {}
 
   async run(register_user: RegisterUser) {
@@ -30,6 +30,6 @@ export class CreateUserService {
   }
 
   async alreadyUserExists(email: string) {
-    return await this.findOneRepository.run({ email });
+    return await this.FindOneUserRepository.run({ email });
   }
 }

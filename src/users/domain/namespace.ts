@@ -24,7 +24,7 @@ export namespace Users {
     run(user: User): Promise<User>;
   }
 
-  export interface FindOneRepository {
+  export interface FindOneUserRepository {
     run(filter: Partial<Model>): Promise<User>;
   }
 }
