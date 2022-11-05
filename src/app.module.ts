@@ -1,14 +1,16 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ConfigModule, TypeOrmModuleFactory(), UsersModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModuleFactory(),
+    TypeOrmModuleFactory(),
+    UsersModule,
+    AuthModule,
+  ],
 })
 export class AppModule {}
 
@@ -33,5 +35,12 @@ export function TypeOrmModuleFactory(): DynamicModule {
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: use_factory,
+  });
+}
+
+export function ConfigModuleFactory(): DynamicModule {
+  return ConfigModule.forRoot({
+    envFilePath: ['.env.development.local', '.env'],
+    isGlobal: true,
   });
 }
