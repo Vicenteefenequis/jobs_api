@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { hashSync } from 'bcryptjs';
+import { hashSync, compareSync } from 'bcryptjs';
 import { Users } from './namespace';
 
 export class User {
@@ -12,6 +12,10 @@ export class User {
 
   encrypt_password() {
     this._props.password = hashSync(this._props.password);
+  }
+
+  has_valid_password(password: string) {
+    return compareSync(password, this._props.password);
   }
 
   get id() {
